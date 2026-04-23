@@ -1,4 +1,5 @@
 Prayer Management System (Java OOP Project)
+
 📌 Overview
 A simple console-based Java application to track daily 5 prayers (Fajr, Zuhur, Asor, Magrib, Esha). Users can mark prayers as completed and view a reward-based report.
 🎯 Objective
