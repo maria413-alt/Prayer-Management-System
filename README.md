@@ -1,125 +1,20 @@
 Prayer Management System (Java OOP Project)
-import java.util.*;
-
-abstract class Prayer {
-    private String name;
-    private boolean completed;
-
-    public Prayer(String name) {
-        this.name = name;
-        this.completed = false;
-    }
-
-    public String getName() { return name; }
-
-    public void markComplete() { completed = true; }
-
-    public boolean isCompleted() { return completed; }
-
-    public abstract int getReward();
-}
-
-class Fajr extends Prayer {
-    public Fajr() { super("Fajr"); }
-    public int getReward() { return 50; }
-}
-
-class Zuhur extends Prayer {
-    public Zuhur() { super("Zuhur"); }
-    public int getReward() { return 40; }
-}
-
-class Asor extends Prayer {
-    public Asor() { super("Asor"); }
-    public int getReward() { return 40; }
-}
-
-class Magrib extends Prayer {
-    public Magrib() { super("Magrib"); }
-    public int getReward() { return 45; }
-}
-
-class Esha extends Prayer {
-    public Esha() { super("Esha"); }
-    public int getReward() { return 60; }
-}
-
-class PrayerManager {
-    private List<Prayer> list = new ArrayList<>();
-
-    public PrayerManager() {
-        list.add(new Fajr());
-        list.add(new Zuhur());
-        list.add(new Asor());
-        list.add(new Magrib());
-        list.add(new Esha());
-    }
-
-    public void showPrayers() {
-        for (Prayer p : list) {
-            System.out.println(p.getName() + " : " + (p.isCompleted() ? "Done" : "Pending"));
-        }
-    }
-
-    public void completePrayer(String name) {
-        for (Prayer p : list) {
-            if (p.getName().equalsIgnoreCase(name)) {
-                p.markComplete();
-                System.out.println(name + " completed!");
-                return;
-            }
-        }
-        System.out.println("Not found");
-    }
-
-    public void showReport() {
-        int totalReward = 0;
-        int completed = 0;
-
-        for (Prayer p : list) {
-            if (p.isCompleted()) {
-                totalReward += p.getReward();
-                completed++;
-            }
-        }
-
-        System.out.println("\nCompleted: " + completed + "/5");
-        System.out.println("Total Reward: " + totalReward);
-    }
-}
-
-public class PrayerApp {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        PrayerManager manager = new PrayerManager();
-
-        while (true) {
-            System.out.println("\n=== PRAYER SYSTEM ===");
-            System.out.println("1. Show Prayers");
-            System.out.println("2. Complete Prayer");
-            System.out.println("3. Show Report");
-            System.out.println("4. Exit");
-
-            int choice = sc.nextInt();
-            sc.nextLine();
-
-            switch (choice) {
-                case 1:
-                    manager.showPrayers();
-                    break;
-
-                case 2:
-                    System.out.print("Enter prayer name: ");
-                    manager.completePrayer(sc.nextLine());
-                    break;
-
-                case 3:
-                    manager.showReport();
-                    break;
-
-                case 4:
-                    return;
-            }
-        }
-    }
-}
+📌 Overview
+A simple console-based Java application to track daily 5 prayers (Fajr, Zuhur, Asor, Magrib, Esha). Users can mark prayers as completed and view a reward-based report.
+🎯 Objective
+To build a real-life inspired prayer tracking system using Object-Oriented Programming (OOP) concepts in Java.
+⭐ Features
+View all daily prayers
+Mark prayer as completed
+Track completed vs pending prayers
+Reward points system
+Simple menu-driven interface
+🧠 OOP Concepts Used
+Abstraction – Abstract Prayer class
+Inheritance – Each prayer extends Prayer class
+Encapsulation – Private data with controlled access
+Polymorphism – Different reward implementation for each prayer
+🛠️ Technologies
+Java
+OOP Principles
+Console Application
