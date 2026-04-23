@@ -9,11 +9,17 @@ abstract class Prayer {
         this.completed = false;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public void markComplete() { completed = true; }
+    public void markComplete() {
+        completed = true;
+    }
 
-    public boolean isCompleted() { return completed; }
+    public boolean isCompleted() {
+        return completed;
+    }
 
     public abstract int getReward();
 }
@@ -23,23 +29,23 @@ class Fajr extends Prayer {
     public int getReward() { return 50; }
 }
 
-class Zuhur extends Prayer {
-    public Zuhur() { super("Zuhur"); }
+class Zuhr extends Prayer {  
+    public Zuhr() { super("Zuhr"); }
     public int getReward() { return 40; }
 }
 
-class Asor extends Prayer {
-    public Asor() { super("Asor"); }
+class Asr extends Prayer { 
+    public Asr() { super("Asr"); }
     public int getReward() { return 40; }
 }
 
-class Magrib extends Prayer {
-    public Magrib() { super("Magrib"); }
+class Maghrib extends Prayer { 
+    public Maghrib() { super("Maghrib"); }
     public int getReward() { return 45; }
 }
 
-class Esha extends Prayer {
-    public Esha() { super("Esha"); }
+class Isha extends Prayer { 
+    public Isha() { super("Isha"); }
     public int getReward() { return 60; }
 }
 
@@ -48,27 +54,32 @@ class PrayerManager {
 
     public PrayerManager() {
         list.add(new Fajr());
-        list.add(new Zuhur());
-        list.add(new Asor());
-        list.add(new Magrib());
-        list.add(new Esha());
+        list.add(new Zuhr());
+        list.add(new Asr());
+        list.add(new Maghrib());
+        list.add(new Isha());
     }
 
     public void showPrayers() {
         for (Prayer p : list) {
-            System.out.println(p.getName() + " : " + (p.isCompleted() ? "Done" : "Pending"));
+            System.out.println(p.getName() + " : " +
+                (p.isCompleted() ? "Done" : "Pending"));
         }
     }
 
     public void completePrayer(String name) {
         for (Prayer p : list) {
-            if (p.getName().equalsIgnoreCase(name)) {
-                p.markComplete();
-                System.out.println(name + " completed!");
+            if (p.getName().equalsIgnoreCase(name.trim())) {
+                if (!p.isCompleted()) {
+                    p.markComplete();
+                    System.out.println(p.getName() + " completed!");
+                } else {
+                    System.out.println(p.getName() + " already completed.");
+                }
                 return;
             }
         }
-        System.out.println("Not found");
+        System.out.println("Prayer not found!");
     }
 
     public void showReport() {
@@ -82,7 +93,7 @@ class PrayerManager {
             }
         }
 
-        System.out.println("\nCompleted: " + completed + "/5");
+        System.out.println("\nCompleted: " + completed + "/" + list.size());
         System.out.println("Total Reward: " + totalReward);
     }
 }
@@ -98,6 +109,13 @@ public class PrayerApp {
             System.out.println("2. Complete Prayer");
             System.out.println("3. Show Report");
             System.out.println("4. Exit");
+            System.out.print("Enter choice: ");
+
+            if (!sc.hasNextInt()) {   
+                System.out.println("Invalid input!");
+                sc.nextLine();
+                continue;
+            }
 
             int choice = sc.nextInt();
             sc.nextLine();
@@ -109,7 +127,8 @@ public class PrayerApp {
 
                 case 2:
                     System.out.print("Enter prayer name: ");
-                    manager.completePrayer(sc.nextLine());
+                    String name = sc.nextLine();
+                    manager.completePrayer(name);
                     break;
 
                 case 3:
@@ -117,7 +136,12 @@ public class PrayerApp {
                     break;
 
                 case 4:
+                    System.out.println("Exiting...");
+                    sc.close();   
                     return;
+
+                default:
+                    System.out.println("Invalid choice!");
             }
         }
     }
